@@ -48,7 +48,7 @@ class TodoListItem extends StatelessWidget {
               DateFormat("dd/MMM/yyyy - HH:mm").format(
                   todo.dateTime), //formatação de datatime com base no pubspec
               //todo.dateTime.toString(),
-              style: TextStyle(fontSize: 19),
+              style: TextStyle(fontSize: 12),
             ),
             Text(
               todo.title,
