@@ -20,7 +20,7 @@ class _TodoListPageState extends State<TodoListPage> {
       child: Scaffold(
           body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: EdgeInsets.all(16),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -59,14 +59,14 @@ class _TodoListPageState extends State<TodoListPage> {
                       primary: const Color(0xff00d7f3),
                       padding: const EdgeInsets.all(14),
                     ),
-                    child: const Icon(
+                    child: Icon(
                       Icons.add,
                       size: 30,
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16),
               Flexible(
                 child: ListView(
                   shrinkWrap: true,
