@@ -2,12 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:intl/intl.dart';
+import 'package:listadetarefas/models/todo.dart';
 
 class TodoListItem extends StatelessWidget {
-  TodoListItem({Key? key, required this.title}) : super(key: key);
+  TodoListItem({Key? key, required this.todo}) : super(key: key);
 
-  final String title;
-  
+  final Todo todo;
 
   @override
   Widget build(BuildContext context) {
@@ -16,17 +17,23 @@ class TodoListItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         color: Colors.grey[300],
       ),
+      margin: EdgeInsets.symmetric(vertical: 2),
       padding: EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(""
-            ,
+          Text(
+            DateFormat("dd/MMM/yyyy - HH:mm").format(
+                todo.dateTime), //formatação de datatime com base no pubspec
+            //todo.dateTime.toString(),
             style: TextStyle(fontSize: 12),
           ),
           Text(
-            title,
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600,),
+            todo.title,
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+            ),
           ),
         ],
       ),
