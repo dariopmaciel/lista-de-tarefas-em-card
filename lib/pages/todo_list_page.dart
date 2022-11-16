@@ -18,7 +18,7 @@ class _TodoListPageState extends State<TodoListPage> {
     return Scaffold(
         body: Center(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -28,19 +28,20 @@ class _TodoListPageState extends State<TodoListPage> {
                   child: TextField(
                     controller:
                         todoControler, //acrescimo do controlador de captura de texto
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: "Add Tarefa:",
                       hintText: "Ex. Estudar Flutter",
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 8,
                 ),
                 ElevatedButton(
                   onPressed: () {
                     String text = todoControler.text;
+                    if (text.isEmpty) return;
                     setState(() {
                       todos.add(text); //add
                       todoControler.clear(); //apaga
@@ -48,22 +49,25 @@ class _TodoListPageState extends State<TodoListPage> {
                     //adicionado oque esta no campo dentro da lista de todos
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: Color(0xff00d7f3),
-                    padding: EdgeInsets.all(14),
+                    primary: const Color(0xff00d7f3),
+                    padding: const EdgeInsets.all(14),
                   ),
-                  child: Icon(
+                  child: const Icon(
                     Icons.add,
                     size: 30,
                   ),
                 ),
               ],
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Flexible(
               child: ListView(
                 shrinkWrap: true,
                 children: [
-                  for (String todo in todos) TodoListItem(),
+                  for (String todo in todos)
+                    TodoListItem(
+                      title: todo,
+                    ),
                 ],
               ),
             ),
