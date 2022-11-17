@@ -7,57 +7,86 @@ import 'package:intl/intl.dart';
 import 'package:listadetarefas/models/todo.dart';
 
 class TodoListItem extends StatelessWidget {
-  TodoListItem({Key? key, required this.todo}) : super(key: key);
+  TodoListItem({
+    Key? key,
+    required this.todo,
+    required this.onDelete,
+  }) : super(key: key);
 
   final Todo todo;
+  final Function(Todo) onDelete;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
-        color: Colors.grey[500],
-      ),
-      margin: const EdgeInsets.symmetric(vertical: 5),
-      padding: const EdgeInsets.all(16),
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+          vertical: 2), //add para inserir borda em todos os containes
       child: Slidable(
         startActionPane: ActionPane(
-          motion: StretchMotion(),
+          extentRatio: 0.5,
+          motion: const StretchMotion(),
           children: [
-            // A SlidableAction can have an icon and/or a label.
             SlidableAction(
-              onPressed: (context) {},
-              backgroundColor: Colors.green,
+              onPressed: (context) {
+                //do the thing
+              },
+              icon: Icons.edit,
+              borderRadius: BorderRadius.circular(15),
+              backgroundColor: Colors.blue,
               foregroundColor: Colors.white,
-              icon: Icons.archive,
-              //label: 'Delete',
             ),
             SlidableAction(
-              onPressed: (context) {},
-              backgroundColor: Color(0xFF21B7CA),
-              foregroundColor: Colors.white,
+              onPressed: (context) {
+                //do the thing
+              },
               icon: Icons.share,
-              //label: 'Share',
+              borderRadius: BorderRadius.circular(15),
+              backgroundColor: Colors.green,
+              foregroundColor: Colors.white,
             ),
           ],
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+        endActionPane: ActionPane(
+          extentRatio: 0.25,
+          motion: const StretchMotion(),
           children: [
-            Text(
-              DateFormat("dd/MMM/yyyy - HH:mm").format(
-                  todo.dateTime), //formatação de datatime com base no pubspec
-              //todo.dateTime.toString(),
-              style: TextStyle(fontSize: 12),
-            ),
-            Text(
-              todo.title,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-              ),
+            SlidableAction(
+              onPressed: (context) {
+                onDelete(todo);
+              },
+              icon: Icons.delete,
+              borderRadius: BorderRadius.circular(15),
+              backgroundColor: Colors.red,
+              foregroundColor: Colors.white,
+              label: "Deletar",
             ),
           ],
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+            color: Colors.grey[400],
+          ),
+//        margin: const EdgeInsets.symmetric(vertical: 5), //removido pois só estava no container central
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                DateFormat("dd/MMM/yyyy - HH:mm").format(
+                    todo.dateTime), //formatação de datatime com base no pubspec
+                //todo.dateTime.toString(),
+                style: TextStyle(fontSize: 12),
+              ),
+              Text(
+                todo.title,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
