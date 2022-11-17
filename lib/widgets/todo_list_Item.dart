@@ -65,7 +65,7 @@ class TodoListItem extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
-            color: Colors.grey[400],
+            color: Colors.grey[00],
           ),
 //        margin: const EdgeInsets.symmetric(vertical: 5), //removido pois só estava no container central
           padding: const EdgeInsets.all(16),
