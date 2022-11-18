@@ -21,92 +21,96 @@ class _TodoListPageState extends State<TodoListPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          body: Center(
-        child: Padding(
-          padding: EdgeInsets.all(16),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller:
-                          todoControler, //acrescimo do controlador de captura de texto
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: "Add Tarefa:",
-                        hintText: "Ex. Estudar Flutter",
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      String text = todoControler.text;
-                      if (text.isEmpty) return;
-                      setState(() {
-                        Todo newTodo = Todo(
-                          //criação do objeto newTodo para ser acrescentada a informação
-                          title: text, //add o texto
-                          dateTime: DateTime.now(), //add a hora
-                        );
-                        todos.add(newTodo); //add adicionado o todo na lista
-                      });
-                      todoControler
-                          .clear(); //apaga a informação anterior do campo textfield
-                    },
-                    style: ElevatedButton.styleFrom(
-                      primary: const Color(0xff00d7f3),
-                      padding: const EdgeInsets.all(14),
-                    ),
-                    child: Icon(
-                      Icons.add,
-                      size: 30,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 16),
-              Flexible(
-                child: ListView(
-                  shrinkWrap: true,
-                  children: [
-                    for (Todo todo in todos)
-                      TodoListItem(
-                        todo: todo,
-                        onDelete: onDelete,
-                      ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 16),
-              Row(
-                children: [
-                  Expanded(
-                    child:
-                        Text("Voce possui ${todos.length} Tarefas pendentes"),
-                  ),
-                  SizedBox(width: 8),
-                  ElevatedButton(
-                    onPressed: () {
-                      //do the thing
-                      showDeletedTodosConfirmationDialog();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      primary: Color(0xff00d7f3),
-                      padding: EdgeInsets.all(14),
-                    ),
-                    child: Text("Limpar Tudo"),
-                  ),
-                ],
-              ),
-            ],
+          appBar: AppBar(
+            title: const Text("App Multuso"),
           ),
-        ),
-      )),
+          drawer: const Drawer(),
+          body: Center(
+            child: Padding(
+              padding: EdgeInsets.all(16),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller:
+                              todoControler, //acrescimo do controlador de captura de texto
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: "Add Tarefa:",
+                            hintText: "Ex. Estudar Flutter",
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 8,
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          String text = todoControler.text;
+                          if (text.isEmpty) return;
+                          setState(() {
+                            Todo newTodo = Todo(
+                              //criação do objeto newTodo para ser acrescentada a informação
+                              title: text, //add o texto
+                              dateTime: DateTime.now(), //add a hora
+                            );
+                            todos.add(newTodo); //add adicionado o todo na lista
+                          });
+                          todoControler
+                              .clear(); //apaga a informação anterior do campo textfield
+                        },
+                        style: ElevatedButton.styleFrom(
+                          primary: const Color(0xff00d7f3),
+                          padding: const EdgeInsets.all(14),
+                        ),
+                        child: Icon(
+                          Icons.add,
+                          size: 30,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 16),
+                  Flexible(
+                    child: ListView(
+                      shrinkWrap: true,
+                      children: [
+                        for (Todo todo in todos)
+                          TodoListItem(
+                            todo: todo,
+                            onDelete: onDelete,
+                          ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                            "Voce possui ${todos.length} Tarefas pendentes"),
+                      ),
+                      SizedBox(width: 8),
+                      ElevatedButton(
+                        onPressed: () {
+                          //do the thing
+                          showDeletedTodosConfirmationDialog();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          primary: Color(0xff00d7f3),
+                          padding: EdgeInsets.all(14),
+                        ),
+                        child: Text("Limpar Tudo"),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          )),
     );
   }
 
