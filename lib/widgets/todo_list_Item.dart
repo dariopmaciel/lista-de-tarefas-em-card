@@ -7,7 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:listadetarefas/models/todo.dart';
 
 class TodoListItem extends StatelessWidget {
-  TodoListItem({
+  const TodoListItem({
     Key? key,
     required this.todo,
     required this.onDelete,
@@ -76,11 +76,11 @@ class TodoListItem extends StatelessWidget {
                 DateFormat("dd/MMM/yyyy - HH:mm").format(
                     todo.dateTime), //formatação de datatime com base no pubspec
                 //todo.dateTime.toString(),
-                style: TextStyle(fontSize: 12),
+                style: const TextStyle(fontSize: 12),
               ),
               Text(
                 todo.title,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
                 ),

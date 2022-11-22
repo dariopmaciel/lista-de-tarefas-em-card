@@ -3,21 +3,28 @@ import 'dart:convert';
 import 'package:listadetarefas/models/todo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+const todoListKey = 'todo_list';
+
 class TodoRepository {
-  TodoRepository() {
-    SharedPreferences.getInstance().then((value) => sharedPreferences = value);
-  }
+  // TodoRepository() {
+  //   SharedPreferences.getInstance().then((value) {
+  //     sharedPreferences = value;
+  //     print(sharedPreferences.getString('todo_list'));
+  //   });
+  // }
 
   late SharedPreferences sharedPreferences;
 
-  //função exemplo
-  // void exemplo() {
-  //   sharedPreferences.setString(
-  //       "nome", "Dario"); //armazenando com a chave "nome" o item "Dario"
-  //   sharedPreferences.getString("nome"); //buscando com a chave "nome"
-  // }
+  Future<List<Todo>> getTodoList() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    final String jsonString =
+        sharedPreferences.getString('todoListKey') ?? '[]';
+    final List jsonDecode = json.decode(jsonString) as List;
+    return jsonDecode.map((e) => Todo.fromJson(e)).toList();
+  }
+
   void saveTodoList(List<Todo> todos) {
-    final jsonString = jsonEncode(todos);
-    print(jsonString);
+    final String jsonString = jsonEncode(todos);
+    sharedPreferences.setString('todo_list', jsonString);
   }
 }

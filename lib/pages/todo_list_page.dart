@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:listadetarefas/models/todo.dart';
+import 'package:listadetarefas/repository/todo_repository.dart';
 import 'package:listadetarefas/widgets/todo_list_Item.dart';
 
 class TodoListPage extends StatefulWidget {
-  TodoListPage({Key? key}) : super(key: key);
+  const TodoListPage({Key? key}) : super(key: key);
 
   @override
   State<TodoListPage> createState() => _TodoListPageState();
@@ -17,23 +18,28 @@ class _TodoListPageState extends State<TodoListPage> {
 
   final TextEditingController todoControler = TextEditingController();
   //criação de controlador para pegar texto de um campo
+  final TodoRepository todoRepository = TodoRepository();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
           appBar: AppBar(
-            title: const Text("App Multuso"),
+            title: const Text("App Multiuso"),
           ),
-          drawer: const Drawer(),
+          drawer: const Drawer(
+            child: Text("CASA"),
+          ),
           body: Center(
             child: Padding(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Row(
                     children: [
                       Expanded(
+                        //'Expanded' expande até a máxima largura possivel
                         child: TextField(
                           controller:
                               todoControler, //acrescimo do controlador de captura de texto
@@ -44,12 +50,11 @@ class _TodoListPageState extends State<TodoListPage> {
                           ),
                         ),
                       ),
-                      const SizedBox(
-                        width: 8,
-                      ),
+                      const SizedBox(width: 8),
                       ElevatedButton(
                         onPressed: () {
-                          String text = todoControler.text;
+                          String text =
+                              todoControler.text; //aqui será invertido, eu acho
                           if (text.isEmpty) return;
                           setState(() {
                             Todo newTodo = Todo(
@@ -61,22 +66,26 @@ class _TodoListPageState extends State<TodoListPage> {
                           });
                           todoControler
                               .clear(); //apaga a informação anterior do campo textfield
+                          todoRepository.saveTodoList(todos);
                         },
                         style: ElevatedButton.styleFrom(
-                          primary: const Color(0xff00d7f3),
-                          padding: const EdgeInsets.all(14),
+                          backgroundColor:
+                              const Color(0xff00d7f3), //cor em hexadecimal
+                          padding: const EdgeInsets.all(
+                              14), //expaçamento entre txt e borda do btn
                         ),
-                        child: Icon(
+                        child: const Icon(
                           Icons.add,
                           size: 30,
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(
+                      height: 16), //expaçamento entre textfield e item
                   Flexible(
                     child: ListView(
-                      shrinkWrap: true,
+                      shrinkWrap: true, //deixa a lista o mais enchuta possivel
                       children: [
                         for (Todo todo in todos)
                           TodoListItem(
@@ -86,24 +95,25 @@ class _TodoListPageState extends State<TodoListPage> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(
+                      height: 16), //expaçamento entre textfield e item
                   Row(
                     children: [
                       Expanded(
                         child: Text(
-                            "Voce possui ${todos.length} Tarefas pendentes"),
+                            "Voce possui: ${todos.length} tarefas pendentes"),
                       ),
-                      SizedBox(width: 8),
+                      const SizedBox(width: 8),
                       ElevatedButton(
                         onPressed: () {
                           //do the thing
                           showDeletedTodosConfirmationDialog();
                         },
                         style: ElevatedButton.styleFrom(
-                          primary: Color(0xff00d7f3),
-                          padding: EdgeInsets.all(14),
+                          backgroundColor: const Color(0xff00d7f3),
+                          padding: const EdgeInsets.all(14),
                         ),
-                        child: Text("Limpar Tudo"),
+                        child: const Text("Limpar Tudo"),
                       ),
                     ],
                   ),
@@ -157,7 +167,7 @@ class _TodoListPageState extends State<TodoListPage> {
               Navigator.of(context).pop();
             },
             style: TextButton.styleFrom(primary: const Color(0xff00d7f3)),
-            child: Text("Cancelar"),
+            child: const Text("Cancelar"),
           ),
           TextButton(
             onPressed: () {
