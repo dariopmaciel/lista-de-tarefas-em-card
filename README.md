@@ -16,9 +16,8 @@ Project credits for UDEMY - Daniel Ciolfi
 
 Updated 08/12/22
 
-![Captura de tela de 2022-12-08 11-31-32](https://user-images.githubusercontent.com/116087297/206473219-4ada69cb-4e5d-411f-a0cc-a2b589a6f425.png)
-![Captura de tela de 2022-12-08 11-31-49](https://user-images.githubusercontent.com/116087297/206473343-bd3269c2-b346-4b6a-a1b6-7eb96dd0b9aa.png)
-![Captura de tela de 2022-12-08 11-33-58](https://user-images.githubusercontent.com/116087297/206473576-5da17546-1f13-4d9a-9080-9aaddab3b01e.png)
+![Captura de tela de 2022-12-08 11-44-46](https://user-images.githubusercontent.com/116087297/206476217-a0b4fc14-9d62-4555-b3c4-29f4caa8ef24.png)
+![Captura de tela de 2022-12-08 11-44-53](https://user-images.githubusercontent.com/116087297/206476436-a93fcb4a-0898-4acc-8807-dc0b901adfd7.png)
 
 Card colorization and Persistence
 
