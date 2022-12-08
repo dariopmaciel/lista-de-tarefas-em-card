@@ -12,9 +12,13 @@ class Todo {
   String title;
   DateTime dateTime;
 
+
+//insformado o tipo de retorno do toJason, sendo sempre do tipo String, dynnamic
   Map<String, dynamic> toJson() {
     return {
+      //String : dynamic
       "title": title,
+      //transformado em string para ser armazenado
       "datetime": dateTime.toIso8601String(),
     };
   }

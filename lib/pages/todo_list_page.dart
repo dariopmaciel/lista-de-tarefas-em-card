@@ -11,14 +11,29 @@ class TodoListPage extends StatefulWidget {
 }
 
 class _TodoListPageState extends State<TodoListPage> {
-  List<Todo> todos =
-      []; //lista guardadas (data e horario) //todos é a lista toda
+  //criação de controlador para pegar texto de um campo
+  final TextEditingController todoControler = TextEditingController();
+  //instanciação para ter acesso ao 'todo_repository.dart'
+  final TodoRepository todoRepository = TodoRepository();
+
+  //lista guardadas (data e horario) //todos é a lista toda
+  List<Todo> todos = [];
+
   Todo? deletedTodo;
   int? deletedTodoPosition;
+  String? errorText;
 
-  final TextEditingController todoControler = TextEditingController();
-  //criação de controlador para pegar texto de um campo
-  final TodoRepository todoRepository = TodoRepository();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    todoRepository.getTodoList().then((value) {
+      setState(() {
+        todos = value;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,19 +58,35 @@ class _TodoListPageState extends State<TodoListPage> {
                         child: TextField(
                           controller:
                               todoControler, //acrescimo do controlador de captura de texto
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
+                          decoration: InputDecoration(
+                            border: const OutlineInputBorder(),
                             labelText: "Add Tarefa:",
                             hintText: "Ex. Estudar Flutter",
+                            errorText: errorText,
+                            focusedBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0xff00d7f3),
+                                width: 3,
+                              ),
+                            ),
+                            labelStyle:
+                                const TextStyle(color: Color(0xff00d7f3)),
                           ),
                         ),
                       ),
                       const SizedBox(width: 8),
                       ElevatedButton(
                         onPressed: () {
-                          String text =
-                              todoControler.text; //aqui será invertido, eu acho
-                          if (text.isEmpty) return;
+                          //aqui será invertido, eu acho
+                          String text = todoControler.text;
+                          if (text.isEmpty) {
+                            setState(() {
+                              errorText = "* Campo obrigatório!";
+                            });
+                            return;
+                          }
+                          ;
+
                           setState(() {
                             Todo newTodo = Todo(
                               //criação do objeto newTodo para ser acrescentada a informação
@@ -63,9 +94,10 @@ class _TodoListPageState extends State<TodoListPage> {
                               dateTime: DateTime.now(), //add a hora
                             );
                             todos.add(newTodo); //add adicionado o todo na lista
+                            errorText = null;
                           });
-                          todoControler
-                              .clear(); //apaga a informação anterior do campo textfield
+                          //apaga a informação anterior do campo textfield
+                          todoControler.clear();
                           todoRepository.saveTodoList(todos);
                         },
                         style: ElevatedButton.styleFrom(
@@ -131,6 +163,8 @@ class _TodoListPageState extends State<TodoListPage> {
     setState(() {
       todos.remove(todo);
     });
+    todoRepository.saveTodoList(todos);
+
     ScaffoldMessenger.of(context).clearSnackBars();
 
     ScaffoldMessenger.of(context).showSnackBar(
@@ -141,12 +175,13 @@ class _TodoListPageState extends State<TodoListPage> {
         ),
         backgroundColor: Colors.grey[300],
         action: SnackBarAction(
-          label: "IH Errei, volta aê",
+          label: "Deseja desfazer?",
           textColor: Colors.purple[700],
           onPressed: () {
             setState(() {
               todos.insert(deletedTodoPosition!, deletedTodo!); //do the thing
             });
+            todoRepository.saveTodoList(todos);
           },
         ),
         duration: const Duration(seconds: 5), //tempo de duração do snackbar
@@ -187,5 +222,6 @@ class _TodoListPageState extends State<TodoListPage> {
     setState(() {
       todos.clear();
     });
+    todoRepository.saveTodoList(todos);
   }
 }
