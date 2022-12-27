@@ -42,8 +42,32 @@ class _TodoListPageState extends State<TodoListPage> {
           appBar: AppBar(
             title: const Text("App Multiuso"),
           ),
-          drawer: const Drawer(
-            child: Text("CASA"),
+          drawer: Drawer(
+            child: ListView(
+              children: const [
+                UserAccountsDrawerHeader(
+                  accountName: Text(
+                    "Dario",
+                  ),
+                  accountEmail: Text(
+                    "dariodepaulamaciel@hotmail.com",
+                  ),
+                  currentAccountPicture: CircleAvatar(
+                    backgroundColor: Colors.greenAccent,
+                    child: Text(
+                      "D",
+                    ),
+                  ),
+                ),
+                ListTile(
+                  title: Text(
+                      "Este projeto foi criado como um experimento de aprendizado."),
+                ),
+                ListTile(
+                  title: Text("Obrigado por sua visualização."),
+                ),
+              ],
+            ),
           ),
           body: Center(
             child: Padding(
